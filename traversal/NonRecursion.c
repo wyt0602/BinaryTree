@@ -5,6 +5,7 @@
  * @version version 1.0
  * @date 2016-04-07
  */
+#include <stdlib.h>
 
 #include "BinaryTree.h"
 #include "Stack.h"

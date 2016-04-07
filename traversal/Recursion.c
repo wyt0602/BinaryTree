@@ -5,6 +5,7 @@
  * @version version 1.0
  * @date 2016-04-07
  */
+#include <stdlib.h>
 
 #include "BinaryTree.h"
 
@@ -21,8 +22,8 @@ void pre_order(TreeNode *root, handle visit)
 {
     if (root != NULL){
 	visit(root->element);
-	pre_order(root->left);
-	pre_order(root->right);
+	pre_order(root->left, visit);
+	pre_order(root->right, visit);
     }
 }
 
@@ -38,9 +39,9 @@ void pre_order(TreeNode *root, handle visit)
 void in_order(TreeNode *root, handle visit)
 {
     if (root != NULL){
-	in_order(root->left);
+	in_order(root->left, visit);
 	visit(root);
-	in_order(root->right);
+	in_order(root->right, visit);
     }
 }
 
@@ -56,8 +57,8 @@ void in_order(TreeNode *root, handle visit)
 void post_order(TreeNode *root, handle visit)
 {
     if (root != NULL){
-	post_order(root->left);
-	post_order(root->right);
+	post_order(root->left, visit);
+	post_order(root->right, visit);
 	visit(root);
     }
 }
