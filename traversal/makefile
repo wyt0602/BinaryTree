@@ -1,12 +1,12 @@
 INC=../headers/
 
-recursion:Recursion.c
+Recursion.o:Recursion.c
 	gcc -Wall -c $^ -I$(INC)
 
-nonrecursion:NonRecursion.c ../util/Stack.c
+NonRecursion.o:NonRecursion.c ../util/Stack.c
 	gcc -Wall -c $^ -I$(INC)
 
-breadthfirst:BreadthFirst.c ../util/Queue.c
+BreadthFirst.o:BreadthFirst.c ../util/Queue.c
 	gcc -Wall -c $^ -I$(INC)
 
 clean:

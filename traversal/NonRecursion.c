@@ -65,13 +65,13 @@ void pre_order(TreeNode *root, handle visit)
 /**
  * push all the left node into the stack
  */ 
-#define FIND_LEFTMOST(stack,root) {\
+#define FIND_LEFTMOST(stack, root) do {\
     TreeNode *temp = root;\
     while (temp->left){\
 	stack_push(stack, temp->left);\
 	temp = temp->left;\
     }\
-}
+} while (0)
 
 /* --------------------------------------------------------------------------*/
 /**
