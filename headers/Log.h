@@ -23,13 +23,13 @@
  * @see printf
  */
 #define LOG(level, ...) \
-{ \
+do { \
     fprintf(LOG_OUTPUT, level); \
     fprintf(LOG_OUTPUT, "<%s in %s:%d> ", __FUNCTION__, __FILE__, __LINE__); \
     fprintf(LOG_OUTPUT, __VA_ARGS__); \
     fprintf(LOG_OUTPUT, "\n"); \
     fflush(LOG_OUTPUT); \
-}
+} while(0)
 
 /**
  * @brief Logs a debug, error, warning, info level message at the log output.
@@ -44,14 +44,14 @@
 /**
  * redirecting stderr to a file
  */ 
-#define LOG_FILE_OPEN(path) {\
+#define LOG_FILE_OPEN(path) do {\
     if(freopen(path, "a+", stderr) == NULL)\
     {\
 	fprintf(stderr, "redirecting stderr error\n");\
 	return 0;\
     }\
-}
+} while(0)
 
-#define LOG_FILE_CLOSE() {fclose(stderr);}
+#define LOG_FILE_CLOSE() do {fclose(stderr);} while(0)
 
 #endif
