@@ -24,4 +24,8 @@ void post_order(TreeNode *root, handle visit);
 
 void breadth_first(TreeNode *root, handle visit);
 
+//tree's depth and tree's leaf node
+int tree_depth(TreeNode *root);
+int leaf_node(TreeNode *root);
+
 #endif

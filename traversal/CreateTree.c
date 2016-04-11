@@ -72,10 +72,27 @@ void clean()
     free(tree_buf);
 }
 
+int tree_depth(TreeNode *root)
+{
+    if (root == NULL)
+	return 0;
+    int l_depth = tree_depth(root->left);
+    int r_depth = tree_depth(root->right);
 
+    return 1 + (l_depth>r_depth?l_depth:r_depth);
+}
 
+int leaf_node(TreeNode *root)
+{
+    if (root == NULL)
+	return 0;
+    if (root->left == NULL && root->right == NULL)
+	return 1;
 
+    int l_leaf = leaf_node(root->left);
+    int r_leaf = leaf_node(root->right);
 
-
+    return l_leaf + r_leaf;
+}
 
 

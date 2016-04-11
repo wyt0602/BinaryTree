@@ -39,3 +39,4 @@ void breadth_first(TreeNode *root, handle visit)
 
     queue_delete(ptr_queue, NULL);
 }
+

@@ -17,6 +17,10 @@ int main()
 
     breadth_first(root, visit);
 
+    int depth = tree_depth(root);
+    int leaf = leaf_node(root);
+    printf("depth:%d leaf:%d\n", depth, leaf);
+
     LOG_FILE_CLOSE();
 
     clean();
