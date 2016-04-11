@@ -1,17 +1,53 @@
 /**
- * @file NonRecursion.c
+ * @file MacNonRecursion.c
  * @Brief  Traverse the tree by the nonrecursive method
  * @author wu yangtao , w_y_tao@163.com
  * @version version 1.0
- * @date 2016-04-07
+ * @date 2016-04-11
  */
 #include <stdlib.h>
 
 #include "BinaryTree.h"
-#include "Stack.h"
 
 #define STACK_INIT_SIZE 1024
 
+typedef struct Stack{
+    /** 
+     * stack array's start address
+     **/
+    void *start_address[STACK_INIT_SIZE];
+    /** 
+     * stack's size
+     **/
+    unsigned int size;
+    /** 
+     * top of the stack
+     **/
+    unsigned int top;
+}Stack;
+
+#define STACK_EMPTY(stack) ((stack->top) == 0)
+#define STACK_FULL(stack) ((stack->top) == (stack->size))
+#define STACK_TOP(stack) ((stack->start_address)[stack->top-1])
+
+#define STACK_NULL {\
+    .start_address = {}, \
+    .size = STACK_INIT_SIZE, \
+    .top = 0 \
+}
+
+#define stack_new(stack,size) 0
+
+#define stack_delete(stack,func) do {\
+    stack->top = 0; \
+} while (0)
+
+#define stack_push(stack,element) do {\
+    stack->start_address[stack->top] = element; \
+    stack->top++; \
+} while (0)
+
+#define stack_pop(stack) ((stack->top)>0?(stack->start_address[--(stack->top)]):NULL)
 
 /* --------------------------------------------------------------------------*/
 /**
@@ -128,7 +164,8 @@ void post_order(TreeNode *root, handle visit)
 
     Stack s = STACK_NULL;
     Stack *stack = &s;
-    /** 
+
+    /**
      * if the right child of the node in the stack is searched, 
      * stack_flag's relative position is set to 1;
      * 0 is the initial state 
@@ -152,7 +189,6 @@ void post_order(TreeNode *root, handle visit)
 	    stack_flag[stack->top-1] = 1;
 	    stack_push(stack, node->right);
 	    FIND_LEFTMOST(stack, node->right);
-
 	}else{
 	    stack_flag[stack->top-1] = 0;
 	    node = stack_pop(stack);

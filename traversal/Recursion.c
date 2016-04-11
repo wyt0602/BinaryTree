@@ -40,7 +40,7 @@ void in_order(TreeNode *root, handle visit)
 {
     if (root != NULL){
 	in_order(root->left, visit);
-	visit(root);
+	visit(root->element);
 	in_order(root->right, visit);
     }
 }
@@ -59,7 +59,7 @@ void post_order(TreeNode *root, handle visit)
     if (root != NULL){
 	post_order(root->left, visit);
 	post_order(root->right, visit);
-	visit(root);
+	visit(root->element);
     }
 }
 

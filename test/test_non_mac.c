@@ -5,7 +5,8 @@
 
 
 //#define RESULT_FILE "recursion.txt"
-#define RESULT_FILE "nonrecursion.txt"
+//#define RESULT_FILE "nonrecursion.txt"
+#define RESULT_FILE "macnonrecursion.txt"
 //#define RESULT_FILE "breadthfirst.txt"
 
 int main()

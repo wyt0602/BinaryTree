@@ -11,7 +11,7 @@
 
 #include "BinaryTree.h"
 
-#define TREE_MAX_SIZE 5000000
+#define TREE_MAX_SIZE 50000
 
 typedef struct Person{
     char name[20];

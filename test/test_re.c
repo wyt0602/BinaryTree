@@ -21,11 +21,11 @@ int main()
 
     fprintf(stderr, "in order!\n");
     fflush(stderr);
-    pre_order(root, visit);
+    in_order(root, visit);
 
     fprintf(stderr, "post order!\n");
     fflush(stderr);
-    pre_order(root, visit);
+    post_order(root, visit);
 
     int depth = tree_depth(root);
     int leaf = leaf_node(root);

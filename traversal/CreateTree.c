@@ -61,8 +61,8 @@ TreeNode* create_tree(unsigned int node_count)
 
 void visit(void *element)
 {
-    //Person *p = element;
-    //INFO("name:%s number:%d\n", p->name, p->number);
+    Person *p = element;
+    INFO("name:%s number:%d\n", p->name, p->number);
 }
 
 
