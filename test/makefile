@@ -1,47 +1,61 @@
-VPATH=../headers:../traversal:../util
-GCCINC=-I../headers/
-SOURCE=test_re.c test_non_mac.c test_non.c test_br.c \
-       CreateTree.c Recursion.c NonRecursion.c MacNonRecursion.c \
-       BreadthFirst.c Stack.c Queue.c
-CFLAGS+=-Wall $(GCCINC)
+#directory for make, use space not : for dividing
+VPATH=. ../headers ../traversal ../util 
+
+#headers for gcc
+GCCINC=-I../headers
+
+#lib not standard
+LIB_SUFFIX=
+
+#parameter for gcc
 CC=gcc
-PG=
+DEBUG=-pg -g
+CFLAGS+=-Wall $(GCCINC) $(DEBUG)
+DNAYMIC=-Wl,-rpath=
+STATIC=-static
+
+SRC:=$(foreach DIR,$(VPATH),$(wildcard $(DIR)/*.c))
+SRC:=$(notdir $(SRC))
+OBJS:=$(patsubst %.c,%.o,$(SRC))
+
+#######################user's define start##############################
+RECURSION:=Recursion.o CreateTree.o test_re.o
+MACNONRECURSION:=MacNonRecursion.o CreateTree.o test_non_mac.o
+NONRECURSION:=NonRecursion.o CreateTree.o Stack.o test_non.o
+BREADTHFIRST:=BreadthFirst.o CreateTree.o Queue.o test_br.o
 
 all:Recursion MacNonRecursion NonRecursion BreadthFirst
 
-Recursion:Recursion.o CreateTree.o  test_re.o
-	$(CC) $(PG) -o re_test $^ $(GCCINC)
+Recursion:$(RECURSION)
+	$(CC) $(FLAGS) -o re_test $^
 
-MacNonRecursion:MacNonRecursion.o CreateTree.o test_non_mac.o
-	$(CC) $(PG) -o mac_non_test $^ $(GCCINC)
+MacNonRecursion:$(MACNONRECURSION)
+	$(CC) $(FLAGS) -o mac_non_test $^
 
-NonRecursion:NonRecursion.o CreateTree.o Stack.o test_non.o
-	$(CC) $(PG) -o non_test $^ $(GCCINC)
+NonRecursion:$(NONRECURSION)
+	$(CC) $(FLAGS) -o non_test $^
 
-BreadthFirst:BreadthFirst.o CreateTree.o Queue.o test_br.o
-	$(CC) $(PG) -o br_test $^ $(INC)
+BreadthFirst:$(BREADTHFIRST)
+	$(CC) $(FLAGS) -o br_test $^
 
-GenMakefile:$(SOURCE)
-	gcc -MM $^ $(GCCINC) >> makefile
 
+#######################user's define end################################
+
+#generate dependency file
+GenDependency:$(SRC)
+	gcc -MM $^ $(GCCINC) > makefile.d
+
+#include dependency file
+-include makefile.d
+
+#clean the current directory
+.PHONY:clean
 clean:
-	rm *.o *_test
+	-rm *.o *_test
+	make GenDependency
 
-test_re.o: test_re.c ../headers/BinaryTree.h ../headers/CreateTree.h \
- ../headers/BinaryTree.h ../headers/Log.h
-test_non_mac.o: test_non_mac.c ../headers/BinaryTree.h \
- ../headers/CreateTree.h ../headers/BinaryTree.h ../headers/Log.h
-test_non.o: test_non.c ../headers/BinaryTree.h ../headers/CreateTree.h \
- ../headers/BinaryTree.h ../headers/Log.h
-test_br.o: test_br.c ../headers/BinaryTree.h ../headers/CreateTree.h \
- ../headers/BinaryTree.h ../headers/Log.h
-CreateTree.o: ../traversal/CreateTree.c ../headers/Log.h \
- ../headers/CreateTree.h ../headers/BinaryTree.h
-Recursion.o: ../traversal/Recursion.c ../headers/BinaryTree.h
-NonRecursion.o: ../traversal/NonRecursion.c ../headers/BinaryTree.h \
- ../headers/Stack.h
-MacNonRecursion.o: ../traversal/MacNonRecursion.c ../headers/BinaryTree.h
-BreadthFirst.o: ../traversal/BreadthFirst.c ../headers/BinaryTree.h \
- ../headers/Queue.h
-Stack.o: ../util/Stack.c ../headers/Stack.h ../headers/Log.h
-Queue.o: ../util/Queue.c ../headers/Queue.h ../headers/Log.h
+#package the source
+.PHONY:package
+package:
+	tar -cvf binarytree.tar $(VPATH)
+
